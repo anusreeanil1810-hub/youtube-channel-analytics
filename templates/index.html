@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Channel Analytics</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        <i class="fa-brands fa-youtube"></i>
+        <h2>YouTube Analytics</h2>
+    </div>
+
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+
+</nav>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Analyze Any <span>YouTube Channel</span>
+        </h1>
+
+        <p>
+            Search a YouTube channel and instantly view
+            subscribers, views, uploads and analytics.
+        </p>
+
+        <form action="/dashboard" method="POST">
+
+            <input
+            type="text"
+            placeholder="Enter Channel Name..."
+            name="channel">
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<section class="features">
+
+    <div class="card">
+
+        <i class="fa-solid fa-users"></i>
+
+        <h3>Subscribers</h3>
+
+        <p>
+            View subscriber count instantly.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <i class="fa-solid fa-eye"></i>
+
+        <h3>Views</h3>
+
+        <p>
+            Check total channel views.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <i class="fa-solid fa-video"></i>
+
+        <h3>Videos</h3>
+
+        <p>
+            Display uploaded videos.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <h3>Analytics</h3>
+
+        <p>
+            Beautiful charts and statistics.
+        </p>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Developed by Anusree Anil © 2026
+    </p>
+
+</footer>
+
+</body>
+</html>

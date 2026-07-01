@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Analytics Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-brands fa-youtube"></i>
+            <h2>YouTube Analytics</h2>
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-line"></i>
+                Analytics
+            </li>
+
+            <li>
+                <i class="fa-solid fa-video"></i>
+                Videos
+            </li>
+
+            <li>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                History
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Header -->
+
+        <header>
+
+            <h1>Dashboard</h1>
+
+            <div class="search-box">
+
+                <input
+                type="text"
+                placeholder="Search Channel">
+
+                <button>
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- Channel Card -->
+
+        <section class="channel-card">
+
+            <img src="https://via.placeholder.com/120"
+                 class="profile">
+
+            <div>
+
+                <h2>MrBeast</h2>
+
+                <p>@mrbeast</p>
+
+                <p>
+                    Making the internet a better place 🌎
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- Statistics -->
+
+        <section class="stats">
+
+            <div class="card">
+
+                <i class="fa-solid fa-users"></i>
+
+                <h3>Subscribers</h3>
+
+                <h2>340 M</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-eye"></i>
+
+                <h3>Views</h3>
+
+                <h2>78 B</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-video"></i>
+
+                <h3>Videos</h3>
+
+                <h2>860</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-earth-americas"></i>
+
+                <h3>Country</h3>
+
+                <h2>USA</h2>
+
+            </div>
+
+        </section>
+
+        <!-- Charts -->
+
+        <section class="charts">
+
+            <div class="chart-card">
+
+                <h2>Views Growth</h2>
+
+                <canvas id="viewsChart"></canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <h2>Subscribers Growth</h2>
+
+                <canvas id="subChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Videos -->
+
+        <section class="videos">
+
+            <h2>Recent Videos</h2>
+
+            <table>
+
+                <tr>
+                    <th>Title</th>
+                    <th>Views</th>
+                    <th>Likes</th>
+                </tr>
+
+                <tr>
+                    <td>Last To Leave Circle Wins</td>
+                    <td>25M</td>
+                    <td>1.8M</td>
+                </tr>
+
+                <tr>
+                    <td>$1 vs $1,000,000 Hotel</td>
+                    <td>19M</td>
+                    <td>1.5M</td>
+                </tr>
+
+                <tr>
+                    <td>Giving Away 100 Cars</td>
+                    <td>14M</td>
+                    <td>980K</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+</html>
