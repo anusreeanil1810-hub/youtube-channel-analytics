@@ -64,6 +64,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     <!-- Main -->
     <main class="main">
+        {% if channel %}
 
         <!-- Header -->
 
@@ -96,13 +97,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
             <div>
 
-                <h2>MrBeast</h2>
+                <h2>{{ channel.channel_name }}</h2>
 
-                <p>@mrbeast</p>
+                <p>{{ channel.country }}</p>
 
-                <p>
-                    Making the internet a better place 🌎
-                </p>
+                <p>{{ channel.description }}</p>
 
             </div>
 
@@ -118,7 +117,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 <h3>Subscribers</h3>
 
-                <h2>340 M</h2>
+                <h2>{{ channel.subscribers }}</h2>
 
             </div>
 
@@ -128,8 +127,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 <h3>Views</h3>
 
-                <h2>78 B</h2>
-
+                <h2>{{ channel.views }}</h2>
             </div>
 
             <div class="card">
@@ -138,7 +136,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 <h3>Videos</h3>
 
-                <h2>860</h2>
+                <h2>{{ channel.videos }}</h2>
 
             </div>
 
@@ -148,7 +146,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 <h3>Country</h3>
 
-                <h2>USA</h2>
+                <h2>{{ channel.country }}</h2>
 
             </div>
 
@@ -190,27 +188,24 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     <th>Likes</th>
                 </tr>
 
+                {% for video in videos %}
                 <tr>
-                    <td>Last To Leave Circle Wins</td>
-                    <td>25M</td>
-                    <td>1.8M</td>
+                     <td>{{ video[0] }}</td>
+                      <td>{{ video[1] }}</td>
+                      <td>{{ video[2] }}</td>
                 </tr>
-
-                <tr>
-                    <td>$1 vs $1,000,000 Hotel</td>
-                    <td>19M</td>
-                    <td>1.5M</td>
-                </tr>
-
-                <tr>
-                    <td>Giving Away 100 Cars</td>
-                    <td>14M</td>
-                    <td>980K</td>
-                </tr>
+                    {% endfor %}
 
             </table>
 
         </section>
+        {% else %}
+
+        <h2 style="text-align:center; margin-top:100px;">
+          Channel Not Found
+        </h2>
+
+        {% endif %}
 
     </main>
 
