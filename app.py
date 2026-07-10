@@ -3,15 +3,16 @@ from db import get_connection
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@app.route('/dashboard', methods=['POST'])
+@app.route("/dashboard", methods=["POST"])
 def dashboard():
 
-    channel_name = request.form['channel']
+    channel_name = request.form["channel"]
 
     conn = get_connection()
 
@@ -21,34 +22,46 @@ def dashboard():
     cursor = conn.cursor()
 
     # Save search history
-    cursor.execute("""
+    cursor.execute(
+        """
         INSERT INTO search_history(channel_name)
         VALUES(%s)
-    """, (channel_name,))
+        """,
+        (channel_name,)
+    )
+
     conn.commit()
 
-    # Fetch channel
-    cursor.execute("""
-        SELECT id,
-               channel_name,
-               subscribers,
-               views,
-               videos,
-               country,
-               description
+    # Get channel details
+    cursor.execute(
+        """
+        SELECT
+            id,
+            channel_name,
+            subscribers,
+            views,
+            videos,
+            country,
+            description
         FROM channels
         WHERE LOWER(channel_name)=LOWER(%s)
-    """, (channel_name,))
+        """,
+        (channel_name,)
+    )
 
     result = cursor.fetchone()
 
     if result is None:
         cursor.close()
         conn.close()
+
         return render_template(
             "dashboard.html",
             channel=None,
-            videos=[]
+            videos=[],
+            labels=[],
+            subscriber_data=[],
+            view_data=[]
         )
 
     channel = {
@@ -61,17 +74,47 @@ def dashboard():
         "description": result[6]
     }
 
-    # Fetch videos
-    cursor.execute("""
-        SELECT title,
-               views,
-               likes
+    # Get latest videos
+    cursor.execute(
+        """
+        SELECT
+            title,
+            views,
+            likes
         FROM videos
         WHERE channel_id=%s
         ORDER BY upload_date DESC
-    """, (channel["id"],))
+        LIMIT 5
+        """,
+        (channel["id"],)
+    )
 
     videos = cursor.fetchall()
+
+    # Get analytics history
+    cursor.execute(
+        """
+        SELECT
+            recorded_date,
+            subscribers,
+            views
+        FROM analytics
+        WHERE channel_id=%s
+        ORDER BY recorded_date
+        """,
+        (channel["id"],)
+    )
+
+    analytics = cursor.fetchall()
+
+    labels = []
+    subscriber_data = []
+    view_data = []
+
+    for row in analytics:
+        labels.append(row[0].strftime("%b %Y"))
+        subscriber_data.append(row[1])
+        view_data.append(row[2])
 
     cursor.close()
     conn.close()
@@ -79,7 +122,10 @@ def dashboard():
     return render_template(
         "dashboard.html",
         channel=channel,
-        videos=videos
+        videos=videos,
+        labels=labels,
+        subscriber_data=subscriber_data,
+        view_data=view_data
     )
 
 

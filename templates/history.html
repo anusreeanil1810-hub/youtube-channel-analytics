@@ -1,0 +1,21 @@
+@app.route("/history")
+def history():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT channel_name, searched_at
+        FROM search_history
+        ORDER BY searched_at DESC
+    """)
+
+    history = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "history.html",
+        history=history
+    )

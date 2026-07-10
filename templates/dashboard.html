@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>YouTube Analytics Dashboard</title>
 
     <link rel="stylesheet"
@@ -13,10 +16,11 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -24,11 +28,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <div class="container">
 
     <!-- Sidebar -->
+
     <aside class="sidebar">
 
         <div class="logo">
+
             <i class="fa-brands fa-youtube"></i>
+
             <h2>YouTube Analytics</h2>
+
         </div>
 
         <ul>
@@ -53,165 +61,246 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                 History
             </li>
 
-            <li>
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </li>
-
         </ul>
 
     </aside>
 
-    <!-- Main -->
+    <!-- Main Content -->
+
     <main class="main">
-        {% if channel %}
 
-        <!-- Header -->
+{% if channel %}
 
-        <header>
+<header>
 
-            <h1>Dashboard</h1>
+<h1>{{ channel.channel_name }}</h1>
 
-            <div class="search-box">
+</header>
 
-                <input
-                type="text"
-                placeholder="Search Channel">
+<!-- Channel Card -->
 
-                <button>
+<section class="channel-card">
 
-                    <i class="fa-solid fa-magnifying-glass"></i>
+<img src="https://via.placeholder.com/120" class="profile">
 
-                </button>
+<div>
 
-            </div>
+<h2>{{ channel.channel_name }}</h2>
 
-        </header>
+<p><strong>Country:</strong> {{ channel.country }}</p>
 
-        <!-- Channel Card -->
-
-        <section class="channel-card">
-
-            <img src="https://via.placeholder.com/120"
-                 class="profile">
-
-            <div>
-
-                <h2>{{ channel.channel_name }}</h2>
-
-                <p>{{ channel.country }}</p>
-
-                <p>{{ channel.description }}</p>
-
-            </div>
-
-        </section>
-
-        <!-- Statistics -->
-
-        <section class="stats">
-
-            <div class="card">
-
-                <i class="fa-solid fa-users"></i>
-
-                <h3>Subscribers</h3>
-
-                <h2>{{ channel.subscribers }}</h2>
-
-            </div>
-
-            <div class="card">
-
-                <i class="fa-solid fa-eye"></i>
-
-                <h3>Views</h3>
-
-                <h2>{{ channel.views }}</h2>
-            </div>
-
-            <div class="card">
-
-                <i class="fa-solid fa-video"></i>
-
-                <h3>Videos</h3>
-
-                <h2>{{ channel.videos }}</h2>
-
-            </div>
-
-            <div class="card">
-
-                <i class="fa-solid fa-earth-americas"></i>
-
-                <h3>Country</h3>
-
-                <h2>{{ channel.country }}</h2>
-
-            </div>
-
-        </section>
-
-        <!-- Charts -->
-
-        <section class="charts">
-
-            <div class="chart-card">
-
-                <h2>Views Growth</h2>
-
-                <canvas id="viewsChart"></canvas>
-
-            </div>
-
-            <div class="chart-card">
-
-                <h2>Subscribers Growth</h2>
-
-                <canvas id="subChart"></canvas>
-
-            </div>
-
-        </section>
-
-        <!-- Recent Videos -->
-
-        <section class="videos">
-
-            <h2>Recent Videos</h2>
-
-            <table>
-
-                <tr>
-                    <th>Title</th>
-                    <th>Views</th>
-                    <th>Likes</th>
-                </tr>
-
-                {% for video in videos %}
-                <tr>
-                     <td>{{ video[0] }}</td>
-                      <td>{{ video[1] }}</td>
-                      <td>{{ video[2] }}</td>
-                </tr>
-                    {% endfor %}
-
-            </table>
-
-        </section>
-        {% else %}
-
-        <h2 style="text-align:center; margin-top:100px;">
-          Channel Not Found
-        </h2>
-
-        {% endif %}
-
-    </main>
+<p>{{ channel.description }}</p>
 
 </div>
 
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</section>
+
+<!-- Statistics -->
+
+<section class="stats">
+
+<div class="card">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>Subscribers</h3>
+
+<h2>{{ "{:,}".format(channel.subscribers) }}</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-eye"></i>
+
+<h3>Views</h3>
+
+<h2>{{ "{:,}".format(channel.views) }}</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-video"></i>
+
+<h3>Videos</h3>
+
+<h2>{{ channel.videos }}</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-earth-americas"></i>
+
+<h3>Country</h3>
+
+<h2>{{ channel.country }}</h2>
+
+</div>
+
+</section>
+
+<!-- Charts -->
+
+<section class="charts">
+
+<div class="chart-card">
+
+<h2>Subscribers Growth</h2>
+
+<canvas id="subChart"></canvas>
+
+</div>
+
+<div class="chart-card">
+
+<h2>Views Growth</h2>
+
+<canvas id="viewsChart"></canvas>
+
+</div>
+
+</section>
+
+<!-- Videos -->
+
+<section class="videos">
+
+<h2>Recent Videos</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Title</th>
+
+<th>Views</th>
+
+<th>Likes</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for video in videos %}
+
+<tr>
+
+<td>{{ video[0] }}</td>
+
+<td>{{ "{:,}".format(video[1]) }}</td>
+
+<td>{{ "{:,}".format(video[2]) }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</section>
+
+{% else %}
+
+<div style="text-align:center;margin-top:120px;">
+
+<h1>Channel Not Found</h1>
+
+<p>Please search for another channel.</p>
+
+</div>
+
+{% endif %}
+
+</main>
+
+</div>
+
+{% if channel %}
+
+<script>
+
+const labels = {{ labels | tojson }};
+const subscribers = {{ subscriber_data | tojson }};
+const views = {{ view_data | tojson }};
+
+// Subscribers Chart
+
+new Chart(document.getElementById("subChart"),{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Subscribers",
+
+data:subscribers,
+
+borderColor:"#ff0000",
+
+backgroundColor:"rgba(255,0,0,0.2)",
+
+fill:true,
+
+tension:0.4
+
+}]
+
+},
+
+options:{
+
+responsive:true
+
+}
+
+});
+
+// Views Chart
+
+new Chart(document.getElementById("viewsChart"),{
+
+type:"bar",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Views",
+
+data:views,
+
+backgroundColor:"#4285F4"
+
+}]
+
+},
+
+options:{
+
+responsive:true
+
+}
+
+});
+
+</script>
+
+{% endif %}
 
 </body>
+
 </html>
