@@ -3,63 +3,67 @@
 ## Mini Project
 
 ### Developed By
-**Anusree Anil**
 
+**Anusree Anil**  
 B.Tech Computer Science and Engineering
 
 ---
 
-## Project Overview
+# Project Overview
 
-The YouTube Channel Analytics System is a web application developed using Flask and ShaktiDB (PostgreSQL). It allows users to create an account, log in, search for YouTube channels, and view channel statistics such as subscribers, views, uploaded videos, and analytics.
+The YouTube Channel Analytics System is a web application developed using **Python, Flask, HTML, CSS, JavaScript, and ShaktiDB**. The application allows users to create an account, log in securely, search for YouTube channels stored in the database, and view channel information such as subscribers, views, uploaded videos, analytics charts, and search history.
 
-The project was developed to understand database connectivity, web development, and data visualization using Python.
+The main objective of this project is to understand web application development using Flask and database management using ShaktiDB.
 
 ---
 
-## Features
+# Features
 
 - User Registration
 - User Login
+- Session Management
 - Search YouTube Channels
 - View Channel Details
-- Subscriber Count
-- Total Views
-- Number of Videos
-- Country Information
-- Recent Videos
+- Display Subscribers
+- Display Total Views
+- Display Number of Videos
+- Display Country Information
+- View Recent Uploaded Videos
 - Analytics Charts
 - Search History
-- Logout Facility
+- Logout
+- Error Messages for Invalid Login and Invalid Channel Search
 
 ---
 
-## Technologies Used
+# Technologies Used
 
 - Python
 - Flask
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 - Chart.js
-- ShaktiDB (PostgreSQL)
+- ShaktiDB
 - Psycopg2
+- Git
+- GitHub
 
 ---
 
-## Database Tables
+# Database Tables
 
-The project uses the following tables:
-
-- users
-- channels
-- videos
-- analytics
-- search_history
+| Table Name | Description |
+|------------|-------------|
+| users | Stores user registration and login details |
+| channels | Stores YouTube channel information |
+| videos | Stores uploaded video details |
+| analytics | Stores subscriber and view analytics |
+| search_history | Stores channel search history |
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 youtube-channel-analytics/
@@ -69,6 +73,7 @@ youtube-channel-analytics/
 │── database.sql
 │── test_db.py
 │── requirements.txt
+│── README.md
 │
 ├── static
 │   └── css
@@ -87,51 +92,57 @@ youtube-channel-analytics/
 
 ---
 
-## How to Run the Project
+# How to Run the Project
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
+```bash
+git clone <repository-link>
 ```
-git clone <repository_link>
-```
 
-### 2. Open the project folder
+### 2. Open the Project Folder
 
-```
+```bash
 cd youtube-channel-analytics
 ```
 
-### 3. Activate the virtual environment
+### 3. Activate the Virtual Environment
 
-Linux
+**Linux**
 
-```
+```bash
 source venv/bin/activate
 ```
 
-Windows
+**Windows**
 
-```
+```bash
 venv\Scripts\activate
 ```
 
-### 4. Install the required packages
+### 4. Install Required Packages
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
-### 5. Start the database server
+### 5. Start the ShaktiDB Server
 
-Start the ShaktiDB/PostgreSQL server.
+Make sure the ShaktiDB server is running before starting the application.
 
-### 6. Run the application
+### 6. Import the Database
 
-```
+Import the `database.sql` file into the `youtube_project` database.
+
+### 7. Run the Application
+
+```bash
 python3 app.py
 ```
 
-### 7. Open the browser
+### 8. Open the Application
+
+Visit the following URL in your browser:
 
 ```
 http://127.0.0.1:5000
@@ -139,35 +150,78 @@ http://127.0.0.1:5000
 
 ---
 
-## Working
+# Working of the Project
 
-1. The user first creates an account.
-2. After successful registration, the user logs in.
-3. The home page allows searching for a YouTube channel.
-4. The dashboard displays channel information and analytics.
-5. Search history is saved in the database.
-6. Invalid login or unavailable channels display appropriate messages.
-
----
-
-## Future Improvements
-
-- Connect with the YouTube Data API for live channel data.
-- Add profile pictures for channels.
-- Export analytics as PDF.
-- Add advanced filtering and sorting.
-- Improve charts with more analytics.
+1. The user creates a new account using the Sign Up page.
+2. The user logs in using registered credentials.
+3. After successful login, the Home page is displayed.
+4. The user searches for a YouTube channel.
+5. The application retrieves the channel information from the ShaktiDB database.
+6. The dashboard displays:
+   - Channel Details
+   - Subscribers
+   - Views
+   - Number of Videos
+   - Recent Videos
+   - Analytics Charts
+7. Every search is stored in the Search History table.
+8. Invalid login credentials or unavailable channels display appropriate error messages.
 
 ---
 
-## Conclusion
+# Screenshots
 
-This project helped in learning Flask web development, ShaktiDB database management, SQL queries, frontend design, and database connectivity. It also provided practical experience in developing a complete database-driven web application.
+Add screenshots of the following pages:
+
+- Login Page
+- Sign Up Page
+- Home Page
+- Dashboard
+- Search History
 
 ---
 
-## Author
+# Future Improvements
+
+- Connect with the YouTube Data API to fetch live data.
+- Add user profile management.
+- Export analytics reports as PDF.
+- Improve dashboard with additional analytics.
+- Add advanced search and filtering.
+- Improve chart visualizations.
+
+---
+
+# Learning Outcomes
+
+This project helped in understanding:
+
+- Flask Web Development
+- Database Connectivity using Psycopg2
+- ShaktiDB Database Management
+- SQL Queries
+- HTML, CSS and JavaScript
+- CRUD Operations
+- User Authentication
+- Session Management
+- Data Visualization using Chart.js
+
+---
+
+# Conclusion
+
+The YouTube Channel Analytics System is a simple database-driven web application that demonstrates the integration of Flask with ShaktiDB. It provides user authentication, channel search, analytics visualization, and search history management. The project helped in gaining practical experience in backend development, frontend design, and database integration.
+
+---
+
+# Author
 
 **Anusree Anil**
 
 B.Tech Computer Science and Engineering
+
+---
+
+## License
+
+This project was developed for educational and academic purposes.
