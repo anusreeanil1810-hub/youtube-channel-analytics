@@ -9,34 +9,31 @@ B.Tech Computer Science and Engineering
 
 ---
 
-# Project Overview
+## Project Overview
 
-The YouTube Channel Analytics System is a web application developed using **Python, Flask, HTML, CSS, JavaScript, and ShaktiDB**. The application allows users to create an account, log in securely, search for YouTube channels stored in the database, and view channel information such as subscribers, views, uploaded videos, analytics charts, and search history.
-
-The main objective of this project is to understand web application development using Flask and database management using ShaktiDB.
+The YouTube Channel Analytics System is a web application developed using **Python, Flask, HTML, CSS, JavaScript, Chart.js, and ShaktiDB**. The application allows users to register, log in, search for YouTube channels stored in the database, and view channel information through an analytics dashboard.
 
 ---
 
-# Features
+## Features
 
 - User Registration
 - User Login
-- Session Management
+- User Logout
 - Search YouTube Channels
 - View Channel Details
-- Display Subscribers
+- Display Subscriber Count
 - Display Total Views
 - Display Number of Videos
 - Display Country Information
-- View Recent Uploaded Videos
-- Analytics Charts
-- Search History
-- Logout
-- Error Messages for Invalid Login and Invalid Channel Search
+- Display Recent Videos
+- Display Analytics Charts
+- Store Search History
+- Display Error Messages for Invalid Login and Invalid Channel Search
 
 ---
 
-# Technologies Used
+## Technologies Used
 
 - Python
 - Flask
@@ -46,26 +43,22 @@ The main objective of this project is to understand web application development 
 - Chart.js
 - ShaktiDB
 - Psycopg2
-- Git
-- GitHub
 
 ---
 
-# Database Tables
+## Database Tables
 
-| Table Name | Description |
-|------------|-------------|
-| users | Stores user registration and login details |
-| channels | Stores YouTube channel information |
-| videos | Stores uploaded video details |
-| analytics | Stores subscriber and view analytics |
-| search_history | Stores channel search history |
+- **users** – Stores user registration and login details.
+- **channels** – Stores YouTube channel information.
+- **videos** – Stores video details for each channel.
+- **analytics** – Stores subscriber and view analytics.
+- **search_history** – Stores the user's search history.
 
 ---
 
-# Project Structure
+## Project Structure
 
-```
+```text
 youtube-channel-analytics/
 
 │── app.py
@@ -86,27 +79,25 @@ youtube-channel-analytics/
 │   ├── index.html
 │   ├── dashboard.html
 │   └── history.html
-│
-└── screenshots
 ```
 
 ---
 
-# How to Run the Project
+## How to Run the Project
 
-### 1. Clone the Repository
+1. Clone the repository.
 
 ```bash
 git clone <repository-link>
 ```
 
-### 2. Open the Project Folder
+2. Open the project folder.
 
 ```bash
 cd youtube-channel-analytics
 ```
 
-### 3. Activate the Virtual Environment
+3. Activate the virtual environment.
 
 **Linux**
 
@@ -120,108 +111,50 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
-### 4. Install Required Packages
+4. Install the required packages.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Start the ShaktiDB Server
+5. Start the ShaktiDB server.
 
-Make sure the ShaktiDB server is running before starting the application.
+6. Import the `database.sql` file into the `youtube_project` database.
 
-### 6. Import the Database
-
-Import the `database.sql` file into the `youtube_project` database.
-
-### 7. Run the Application
+7. Run the application.
 
 ```bash
 python3 app.py
 ```
 
-### 8. Open the Application
+8. Open your browser and visit:
 
-Visit the following URL in your browser:
-
-```
+```text
 http://127.0.0.1:5000
 ```
 
 ---
 
-# Working of the Project
+## Working
 
 1. The user creates a new account using the Sign Up page.
 2. The user logs in using registered credentials.
 3. After successful login, the Home page is displayed.
 4. The user searches for a YouTube channel.
-5. The application retrieves the channel information from the ShaktiDB database.
-6. The dashboard displays:
-   - Channel Details
-   - Subscribers
-   - Views
-   - Number of Videos
-   - Recent Videos
-   - Analytics Charts
-7. Every search is stored in the Search History table.
+5. The application retrieves channel information from the ShaktiDB database.
+6. The dashboard displays channel details, analytics charts, and recent videos.
+7. Every search is stored in the search history.
 8. Invalid login credentials or unavailable channels display appropriate error messages.
 
 ---
 
-# Screenshots
+## Conclusion
 
-Add screenshots of the following pages:
-
-- Login Page
-- Sign Up Page
-- Home Page
-- Dashboard
-- Search History
+The YouTube Channel Analytics System is a database-driven web application that demonstrates the integration of Flask with ShaktiDB. It provides user authentication, channel search, analytics visualization, and search history management. This project helped in understanding database connectivity, SQL queries, frontend development, and backend integration.
 
 ---
 
-# Future Improvements
+## Author
 
-- Connect with the YouTube Data API to fetch live data.
-- Add user profile management.
-- Export analytics reports as PDF.
-- Improve dashboard with additional analytics.
-- Add advanced search and filtering.
-- Improve chart visualizations.
-
----
-
-# Learning Outcomes
-
-This project helped in understanding:
-
-- Flask Web Development
-- Database Connectivity using Psycopg2
-- ShaktiDB Database Management
-- SQL Queries
-- HTML, CSS and JavaScript
-- CRUD Operations
-- User Authentication
-- Session Management
-- Data Visualization using Chart.js
-
----
-
-# Conclusion
-
-The YouTube Channel Analytics System is a simple database-driven web application that demonstrates the integration of Flask with ShaktiDB. It provides user authentication, channel search, analytics visualization, and search history management. The project helped in gaining practical experience in backend development, frontend design, and database integration.
-
----
-
-# Author
-
-**Anusree Anil**
-
+**Anusree Anil**  
 B.Tech Computer Science and Engineering
-
----
-
-## License
-
-This project was developed for educational and academic purposes.
