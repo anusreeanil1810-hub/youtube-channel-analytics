@@ -1,16 +1,160 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
 from db import get_connection
 
 app = Flask(__name__)
+app.secret_key = "youtubeanalytics2026"
 
+
+# -------------------- LOGIN --------------------
 
 @app.route("/")
+def login_page():
+
+    if "user" in session:
+        return render_template("index.html")
+
+    return render_template("login.html")
+
+
+# -------------------- SIGNUP PAGE --------------------
+
+@app.route("/signup")
+def signup_page():
+
+    return render_template("signup.html")
+
+
+# -------------------- CREATE ACCOUNT --------------------
+
+@app.route("/signup", methods=["POST"])
+def signup():
+
+    fullname = request.form["fullname"]
+    email = request.form["email"]
+    password = request.form["password"]
+    confirm = request.form["confirm"]
+
+    if password != confirm:
+        return render_template(
+        "signup.html",
+        error="Passwords do not match."
+    )
+
+    conn = get_connection()
+
+    if conn is None:
+        return "Database Connection Failed"
+
+    cursor = conn.cursor()
+
+    # Check if email already exists
+
+    cursor.execute(
+        """
+        SELECT * FROM users
+        WHERE email=%s
+        """,
+        (email,)
+    )
+
+    existing = cursor.fetchone()
+
+    if existing:
+
+        cursor.close()
+        conn.close()
+
+        return render_template(
+        "signup.html",
+        error="An account with this email already exists."
+    )
+
+    cursor.execute(
+        """
+        INSERT INTO users(fullname,email,password)
+        VALUES(%s,%s,%s)
+        """,
+        (fullname, email, password)
+    )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return redirect("/")
+
+
+# -------------------- LOGIN CHECK --------------------
+
+@app.route("/login", methods=["POST"])
+def login():
+
+    email = request.form["email"]
+    password = request.form["password"]
+
+    conn = get_connection()
+
+    if conn is None:
+        return "Database Connection Failed"
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT fullname
+        FROM users
+        WHERE email=%s
+        AND password=%s
+        """,
+        (email, password)
+    )
+
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if user:
+
+        session["user"] = user[0]
+
+        return redirect("/home")
+
+    return render_template(
+        "login.html",
+        error="Invalid email or password."
+    )
+
+
+# -------------------- LOGOUT --------------------
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/")
+
+
+# -------------------- HOME --------------------
+
+@app.route("/home")
 def home():
+
+    if "user" not in session:
+        return redirect("/")
+
     return render_template("index.html")
 
 
+# -------------------- DASHBOARD --------------------
+
 @app.route("/dashboard", methods=["POST"])
 def dashboard():
+
+    if "user" not in session:
+        return redirect("/")
 
     channel_name = request.form["channel"]
 
@@ -21,7 +165,8 @@ def dashboard():
 
     cursor = conn.cursor()
 
-    # Save search history
+    # Save Search History
+
     cursor.execute(
         """
         INSERT INTO search_history(channel_name)
@@ -32,7 +177,8 @@ def dashboard():
 
     conn.commit()
 
-    # Get channel details
+    # Get Channel
+
     cursor.execute(
         """
         SELECT
@@ -52,6 +198,7 @@ def dashboard():
     result = cursor.fetchone()
 
     if result is None:
+
         cursor.close()
         conn.close()
 
@@ -65,6 +212,7 @@ def dashboard():
         )
 
     channel = {
+
         "id": result[0],
         "channel_name": result[1],
         "subscribers": result[2],
@@ -72,9 +220,11 @@ def dashboard():
         "videos": result[4],
         "country": result[5],
         "description": result[6]
+
     }
 
-    # Get latest videos
+    # Recent Videos
+
     cursor.execute(
         """
         SELECT
@@ -91,7 +241,8 @@ def dashboard():
 
     videos = cursor.fetchall()
 
-    # Get analytics history
+    # Analytics
+
     cursor.execute(
         """
         SELECT
@@ -112,6 +263,7 @@ def dashboard():
     view_data = []
 
     for row in analytics:
+
         labels.append(row[0].strftime("%b %Y"))
         subscriber_data.append(row[1])
         view_data.append(row[2])
@@ -126,6 +278,37 @@ def dashboard():
         labels=labels,
         subscriber_data=subscriber_data,
         view_data=view_data
+    )
+
+
+# -------------------- HISTORY --------------------
+
+@app.route("/history")
+def history():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT channel_name, searched_at
+        FROM search_history
+        ORDER BY searched_at DESC
+        """
+    )
+
+    history = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "history.html",
+        history=history
     )
 
 

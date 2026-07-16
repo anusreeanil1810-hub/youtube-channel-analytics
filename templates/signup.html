@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account | YouTube Analytics</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-brands fa-youtube"></i>
+
+<h2>YouTube Analytics</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Login</a></li>
+
+<li><a href="/signup">Sign Up</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+
+Create Your <span>Account</span>
+
+</h1>
+
+<p>
+
+Join YouTube Analytics and explore subscriber growth,
+video performance, channel statistics and beautiful charts.
+
+</p>
+
+<div class="login-box">
+
+{% if error %}
+<div class="message error">
+    {{ error }}
+</div>
+{% endif %}
+
+<form action="/signup" method="POST">
+
+<input
+type="text"
+name="fullname"
+placeholder="Full Name"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Email Address"
+required>
+
+<input
+type="password"
+name="password"
+placeholder="Password"
+required>
+
+<input
+type="password"
+name="confirm"
+placeholder="Confirm Password"
+required>
+
+<button type="submit">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Create Account
+
+</button>
+
+</form>
+
+<p>
+
+Already have an account?
+
+<a href="/">
+
+Login Here
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<div class="card">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>Subscribers</h3>
+
+<p>
+Track subscriber growth with detailed insights.
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-eye"></i>
+
+<h3>Views</h3>
+
+<p>
+Monitor total channel views and performance.
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Analytics</h3>
+
+<p>
+Interactive charts for better analysis.
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-video"></i>
+
+<h3>Videos</h3>
+
+<p>
+View uploaded videos and their statistics.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>
+
+Developed by Anusree Anil © 2026
+
+</p>
+
+</footer>
+
+</body>
+
+</html>
