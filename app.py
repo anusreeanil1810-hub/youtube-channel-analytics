@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from db import get_connection
+from flask import jsonify
 
 app = Flask(__name__)
 app.secret_key = "youtubeanalytics2026"
@@ -311,6 +312,37 @@ def history():
         history=history
     )
 
+
+@app.route("/suggest")
+def suggest():
+
+    query = request.args.get("q", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    if query == "":
+        cursor.execute("""
+            SELECT DISTINCT channel_name
+            FROM search_history
+            ORDER BY searched_at DESC
+            LIMIT 5
+        """)
+    else:
+        cursor.execute("""
+            SELECT channel_name
+            FROM channels
+            WHERE LOWER(channel_name)
+            LIKE LOWER(%s)
+            LIMIT 5
+        """, (query + "%",))
+
+    results = [row[0] for row in cursor.fetchall()]
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
@@ -45,12 +46,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             subscribers, views, uploads and analytics.
         </p>
 
-        <form action="/dashboard" method="POST">
+        <form action="/dashboard" method="POST" autocomplete="off">
 
-            <input
-            type="text"
-            placeholder="Enter Channel Name..."
-            name="channel">
+            <div class="search-container">
+
+                <input
+                    type="text"
+                    id="channel"
+                    name="channel"
+                    placeholder="Enter Channel Name..."
+                    autocomplete="off"
+                    required>
+
+                <div id="suggestions" class="suggestions"></div>
+
+            </div>
 
             <button type="submit">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -66,62 +76,108 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <section class="features">
 
     <div class="card">
-
         <i class="fa-solid fa-users"></i>
-
         <h3>Subscribers</h3>
-
-        <p>
-            View subscriber count instantly.
-        </p>
-
+        <p>View subscriber count instantly.</p>
     </div>
 
     <div class="card">
-
         <i class="fa-solid fa-eye"></i>
-
         <h3>Views</h3>
-
-        <p>
-            Check total channel views.
-        </p>
-
+        <p>Check total channel views.</p>
     </div>
 
     <div class="card">
-
         <i class="fa-solid fa-video"></i>
-
         <h3>Videos</h3>
-
-        <p>
-            Display uploaded videos.
-        </p>
-
+        <p>Display uploaded videos.</p>
     </div>
 
     <div class="card">
-
         <i class="fa-solid fa-chart-line"></i>
-
         <h3>Analytics</h3>
-
-        <p>
-            Beautiful charts and statistics.
-        </p>
-
+        <p>Beautiful charts and statistics.</p>
     </div>
 
 </section>
 
 <footer>
-
     <p>
         Developed by Anusree Anil © 2026
     </p>
-
 </footer>
 
+<script>
+
+const input = document.getElementById("channel");
+const suggestions = document.getElementById("suggestions");
+
+function loadSuggestions(query=""){
+
+    fetch("/suggest?q=" + encodeURIComponent(query))
+
+    .then(response => response.json())
+
+    .then(data=>{
+
+        suggestions.innerHTML="";
+
+        if(data.length===0){
+
+            suggestions.style.display="none";
+            return;
+
+        }
+
+        suggestions.style.display="block";
+
+        data.forEach(function(name){
+
+            const div=document.createElement("div");
+
+            div.className="suggestion-item";
+
+            div.innerHTML=name;
+
+            div.onclick=function(){
+
+                input.value=name;
+                suggestions.style.display="none";
+
+            };
+
+            suggestions.appendChild(div);
+
+        });
+
+    });
+
+}
+
+input.addEventListener("focus",function(){
+
+    loadSuggestions("");
+
+});
+
+input.addEventListener("input",function(){
+
+    loadSuggestions(this.value);
+
+});
+
+document.addEventListener("click",function(e){
+
+    if(!suggestions.contains(e.target) && e.target!==input){
+
+        suggestions.style.display="none";
+
+    }
+
+});
+
+</script>
+
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
 </body>
 </html>
